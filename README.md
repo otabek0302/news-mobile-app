@@ -40,7 +40,7 @@ Follow the steps below to set up the project.
 ```bash
 git clone https://github.com/yourusername/news-app-react-native.git
 cd news-app-react-native
-
+```
 
 ---
 
@@ -51,7 +51,7 @@ cd news-app-react-native
 ```javascript
 const API_KEY = 'YOUR_API_KEY'; // Replace this with your NewsAPI key
 export const NEWS_API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
-
+```
 ### 4. Run the App ▶️
 
 Run the following commands to launch the app:
@@ -59,12 +59,11 @@ Run the following commands to launch the app:
 #### For Android:
 ```bash
 npx react-native run-android
-
+```
 #### For iOS:
 ```bash
-
 npx react-native run-ios
-
+```
 ### Project Structure 🗂️
 
 The project is organized as follows for clarity and maintainability:
@@ -153,8 +152,6 @@ Contributions are welcome! If you'd like to contribute to this project, follow t
 
 5. **Open a Pull Request**:
    Your contributions will be reviewed, and once approved, merged into the main branch.
-
----
 
 ## Contact 📧
 For questions, feedback, or suggestions, feel free to reach out:
