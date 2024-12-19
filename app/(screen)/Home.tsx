@@ -1,14 +1,21 @@
 import { Text, View, StyleSheet } from "react-native";
 
-import CategorySlider from "../components/home/CategorySlider";
-import Header from "../components/home/Header";
+import CategorySlider from "@/components/home/CategorySlider";
+import Header from "@/components/home/Header";
+import TopHeadlineSlider from "@/components/home/TopHeadlineSlider";
 
 const Home = () => {
   return (
     <View style={styles.homePage}>
       <Header />
+      
+      {/* Catgeory List Slider */}
       <CategorySlider />
-      <Text>Home page</Text>
+      
+      {/* Top Headline Slider */}
+      <TopHeadlineSlider />
+      
+      <Text>Home page changed</Text>
     </View>
   );
 };

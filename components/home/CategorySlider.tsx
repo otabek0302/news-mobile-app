@@ -1,12 +1,7 @@
-import { Colors } from "@/app/constants/Colors";
 import { useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
+import Colors from "@/constants/Colors";
 
 const CategorySlider = () => {
   const categoryList = [
@@ -34,17 +29,18 @@ const CategorySlider = () => {
   const [active, setActive] = useState(1);
   return (
     <View>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={categoryList}
-        renderItem={({ item }) => (
-            <TouchableOpacity style={styles.categorySliderButton} onPress={() => setActive(item.id)}>
-                <Text style={styles.categorySliderSectionText}>
-                  {item.category}
-                </Text>
-                <View style={active === item.id && styles.categorySliderButtonActive} />
-            </TouchableOpacity>
+      <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoryList} renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.categorySliderButton}
+            onPress={() => setActive(item.id)}
+          >
+            <Text style={styles.categorySliderSectionText}>
+              {item.category}
+            </Text>
+            <View
+              style={active === item.id && styles.categorySliderButtonActive}
+            />
+          </TouchableOpacity>
         )}
       />
     </View>
