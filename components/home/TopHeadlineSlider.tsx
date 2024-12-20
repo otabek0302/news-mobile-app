@@ -1,31 +1,12 @@
 import Colors from "@/constants/Colors";
-import GlobalApi from "@/services/GlobalApi";
 
-import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View, Image, Dimensions, Text } from "react-native";
 
-type Article = {
-  urlToImage: string;
-  title: string;
-  source: {
-    name: string;
-  };
+type TopHeadlineSliderProps = {
+  newsList: any[];
 };
 
-
-const TopHeadlineSlider = () => {
-  const [newsList, setNewsList] = useState<Article[]>([]);
-
-  useEffect(() => {
-    getTopHeadline();
-  }, []);
-
-  const getTopHeadline = async () => {
-    const res: any = (await GlobalApi.getTopHeadLines).data;
-    // console.log(res);
-    setNewsList(res.articles || []);
-  };
-
+const TopHeadlineSlider: React.FC<TopHeadlineSliderProps> = ({ newsList }) => {
   return (
     <View style={styles.topHeadlineContainer}>
       <FlatList
@@ -35,8 +16,13 @@ const TopHeadlineSlider = () => {
         style={styles.topHeadlineImageContainer}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.topHeadlineImageBox}>
-            <Image source={{ uri: item.urlToImage }} style={styles.topHeadlineImage} />
-            <Text style={styles.topHeadlineTitle} numberOfLines={3}>{item?.title}</Text>
+            <Image
+              source={{ uri: item.urlToImage }}
+              style={styles.topHeadlineImage}
+            />
+            <Text style={styles.topHeadlineTitle} numberOfLines={3}>
+              {item?.title}
+            </Text>
             <Text style={styles.topHeadlineText}>{item?.source?.name}</Text>
           </TouchableOpacity>
         )}
@@ -47,10 +33,9 @@ const TopHeadlineSlider = () => {
 
 const styles = StyleSheet.create({
   topHeadlineContainer: {
-      marginTop: 6,
+    marginTop: 6,
   },
-  topHeadlineImageContainer: {
-  },
+  topHeadlineImageContainer: {},
   topHeadlineImageBox: {
     width: Dimensions.get("screen").width * 0.88,
     marginRight: 10,
@@ -76,7 +61,7 @@ const styles = StyleSheet.create({
     color: Colors.light.primary,
     paddingHorizontal: 12,
     marginBottom: 12,
-  }
+  },
 });
 
 export default TopHeadlineSlider;

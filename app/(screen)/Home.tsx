@@ -1,22 +1,48 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { useEffect, useState } from "react";
 
 import CategorySlider from "@/components/home/CategorySlider";
 import Header from "@/components/home/Header";
 import TopHeadlineSlider from "@/components/home/TopHeadlineSlider";
+import HeadlineSlider from "@/components/home/HeadlineSlider";
+import GlobalApi from "@/services/GlobalApi";
+
+
+type Article = {
+  urlToImage: string;
+  title: string;
+  source: {
+    name: string;
+  };
+};
 
 const Home = () => {
+  const [newsList, setNewsList] = useState<Article[]>([]);
+
+  useEffect(() => {
+    getTopHeadline();
+  }, []);
+
+  const getTopHeadline = async () => {
+    const res: any = (await GlobalApi.getTopHeadLines).data;
+    // console.log(res);
+    setNewsList(res.articles || []);
+  };
+
   return (
-    <View style={styles.homePage}>
+    <ScrollView style={styles.homePage}>
       <Header />
-      
+
       {/* Catgeory List Slider */}
       <CategorySlider />
-      
+
       {/* Top Headline Slider */}
-      <TopHeadlineSlider />
-      
-      <Text>Home page changed</Text>
-    </View>
+      <TopHeadlineSlider newsList={newsList} />
+
+      {/* Headline Slider */}
+      <HeadlineSlider newsList={newsList} />
+
+    </ScrollView>
   );
 };
 
