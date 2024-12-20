@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 
 import CategorySlider from "@/components/home/CategorySlider";

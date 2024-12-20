@@ -1,5 +1,6 @@
 import Colors from "@/constants/Colors";
 
+import { useRouter } from "expo-router";
 import { FlatList, StyleSheet, TouchableOpacity, View, Image, Dimensions, Text } from "react-native";
 
 type TopHeadlineSliderProps = {
@@ -7,6 +8,8 @@ type TopHeadlineSliderProps = {
 };
 
 const TopHeadlineSlider: React.FC<TopHeadlineSliderProps> = ({ newsList }) => {
+  const router = useRouter();
+
   return (
     <View style={styles.topHeadlineContainer}>
       <FlatList
@@ -15,7 +18,9 @@ const TopHeadlineSlider: React.FC<TopHeadlineSliderProps> = ({ newsList }) => {
         keyExtractor={(item, index) => index.toString()}
         style={styles.topHeadlineImageContainer}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.topHeadlineImageBox}>
+          <TouchableOpacity 
+            onPress={() => router.push('/read-news')}
+            style={styles.topHeadlineImageBox}>
             <Image
               source={{ uri: item.urlToImage }}
               style={styles.topHeadlineImage}
