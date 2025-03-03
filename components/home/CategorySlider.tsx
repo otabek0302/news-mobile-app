@@ -1,13 +1,19 @@
+import React from "react";
+import Colors from "@/constants/Colors";
+import GlobalApi from "@/services/GlobalApi";
+
 import { useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import Colors from "@/constants/Colors";
+type CategorySliderProps = {
+  onCategoryChange: (newsList: any[]) => void;
+};
 
-const CategorySlider = () => {
+const CategorySlider: React.FC<CategorySliderProps> = ({ onCategoryChange }) => {
   const categoryList = [
     {
       id: 1,
-      category: "Lastest",
+      category: "Latest",
     },
     {
       id: 2,
@@ -15,33 +21,65 @@ const CategorySlider = () => {
     },
     {
       id: 3,
-      category: "Movies",
-    },
-    {
-      id: 4,
       category: "Business",
     },
     {
+      id: 4,
+      category: "Technology",
+    },
+    {
       id: 5,
+      category: "Entertainment",
+    },
+    {
+      id: 6,
       category: "Sports",
+    },
+    {
+      id: 7,
+      category: "Science",
+    },
+    {
+      id: 8,
+      category: "Health",
     },
   ];
   const [active, setActive] = useState(1);
+
+  const handleCategoryPress = async (item: any) => {
+    setActive(item.id);
+    
+    try {
+      if (item.category === "Latest") {
+        // For "Latest", use the original top headlines API
+        const res: any = (await GlobalApi.getTopHeadLines).data;
+        if (res && res.articles) {
+          onCategoryChange(res.articles);
+        }
+      } else {
+        // For other categories, use the category-specific API
+        const res: any = (await GlobalApi.getNewsByCategory(item.category)).data;
+        if (res && res.articles) {
+          onCategoryChange(res.articles);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching category news:", error);
+    }
+  };
+
   return (
     <View>
-      <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoryList} renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.categorySliderButton}
-            onPress={() => setActive(item.id)}
-          >
+      <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoryList} 
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.categorySliderButton} onPress={() => handleCategoryPress(item)} >
             <Text style={styles.categorySliderSectionText}>
               {item.category}
             </Text>
-            <View
-              style={active === item.id && styles.categorySliderButtonActive}
-            />
+            <View style={active === item.id && styles.categorySliderButtonActive} />
           </TouchableOpacity>
         )}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );
@@ -49,23 +87,20 @@ const CategorySlider = () => {
 
 const styles = StyleSheet.create({
   categorySliderButton: {
-    marginRight: 24,
-    marginTop: 4,
-    marginBottom: 4,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  categorySliderButtonActive: {
-    width: "100%",
-    height: 4,
-    marginTop: 2,
-    backgroundColor: Colors.light.primary,
-    borderRadius: 8,
+    marginRight: 20,
+    marginVertical: 10,
   },
   categorySliderSectionText: {
+    fontSize: 16,
+    fontWeight: "500",
     color: Colors.light.textDark,
-    fontSize: 20,
-    fontWeight: 700,
+  },
+  categorySliderButtonActive: {
+    height: 3,
+    width: "100%",
+    backgroundColor: Colors.light.primary,
+    marginTop: 5,
+    borderRadius: 10,
   },
 });
 

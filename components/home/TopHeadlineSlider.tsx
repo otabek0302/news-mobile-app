@@ -1,3 +1,4 @@
+import * as React from "react";
 import Colors from "@/constants/Colors";
 
 import { useRouter } from "expo-router";
@@ -10,21 +11,26 @@ type TopHeadlineSliderProps = {
 const TopHeadlineSlider: React.FC<TopHeadlineSliderProps> = ({ newsList }) => {
   const router = useRouter();
 
+  const handleNewsPress = (item: any) => {
+    const serializedNews = {
+      title: item.title,
+      description: item.description,
+      content: item.content,
+      urlToImage: item.urlToImage,
+      publishedAt: item.publishedAt,
+      source: item.source,
+    };
+    router.push({
+      pathname: '/read-news',
+      params: { news: JSON.stringify(serializedNews) }
+    });
+  };
+
   return (
     <View style={styles.topHeadlineContainer}>
-      <FlatList
-        data={newsList}
-        horizontal
-        keyExtractor={(item, index) => index.toString()}
-        style={styles.topHeadlineImageContainer}
-        renderItem={({ item }) => (
-          <TouchableOpacity 
-            onPress={() => router.push('/read-news')}
-            style={styles.topHeadlineImageBox}>
-            <Image
-              source={{ uri: item.urlToImage }}
-              style={styles.topHeadlineImage}
-            />
+      <FlatList data={newsList} horizontal keyExtractor={(item, index) => index.toString()} style={styles.topHeadlineImageContainer} renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleNewsPress(item)}style={styles.topHeadlineImageBox}>
+            <Image source={{ uri: item.urlToImage }} style={styles.topHeadlineImage} />
             <Text style={styles.topHeadlineTitle} numberOfLines={3}>
               {item?.title}
             </Text>

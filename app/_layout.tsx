@@ -8,7 +8,7 @@ export default function RootLayout() {
     <>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="news-read" options={{ headerShown: false }} />
+        <Stack.Screen name="read-news" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </>
